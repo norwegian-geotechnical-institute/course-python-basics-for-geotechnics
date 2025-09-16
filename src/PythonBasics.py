@@ -244,7 +244,7 @@ print(8 > 9)
 # >=
 print(8 >= 8)
 
-# == 
+# ==
 print(7 == 7)
 
 # <
@@ -252,6 +252,18 @@ print(7 < 8)
 
 # <=
 print(7 <= 7)
+
+# match - cases are an alternative control structure that is more efficient 
+# when it comes to matching single strings
+DRILLING_ID = 'D_06'
+
+match DRILLING_ID:
+    case 'D_00':
+        print(f'the drilling {DRILLING_ID} encountered {weathering_grades[2]} rock')
+    case 'D_01':
+        print(f'the drilling {DRILLING_ID} encountered {weathering_grades[1]} rock')
+    case _:
+        print('unknown drilling')
 
 
 ### control structures: loops: while loop, for loop
@@ -276,50 +288,168 @@ print(f'now the loop is finished because the iterator = {iterator}')
 # session 2 on 16. September 2025
 ###########################
 
-# 1. Repetition
-
-
-# 2. new topics in accition to yesterday
-
-# list concatenation with +
-# range()
-# == vs is 
-# != vs is not
-# match cases
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 # Exercise 5
 
+fibonaccis = [0]
+
+running_number = 1
+
+STOP = 200
+
+while running_number < STOP:
+    fibonaccis.append(running_number)
+    running_number = fibonaccis[-1] + fibonaccis[-2]
+
+print(fibonaccis)
+
+
+# for loop
+# for loops are there to iterate over finite numbers of elements
+
+soiltype_list = ['silt', 'sand', 'cobbles', 'clay', 'silty clay', 'sandy silt']
+soil_cohesions = [10, 0, 0, 30, 20, 5]
+
+for i in range(len(soiltype_list)):
+    print(soiltype_list[i], soil_cohesions[i])
+
 # Exercise 6
+STOP = 1000
+
+numbers = []
+
+for i in range(STOP):
+    if i % 3 == 0 or i % 5 == 0:
+        numbers.append(i)
+print(sum(numbers))
+
 
 # Exercise 7
 
 
+rocks = ['granite', 'sandstone', 'basalt', 'limestone', 'tuff', 'quartzite',
+         'kaolin', 'phonolite', 'gneiss', 'sand', 'diabase', 'black coal',
+         'slate', 'andesite', 'andesite', 'gypsum and anhydrite', 'greywacke',
+         'suevite']
+
+year = 2007
+
+years = list(range(year, year + len(rocks)))
+
+# for loop approach 1
+for i in range(len(rocks)):
+    print(f'the rock of the year {years[i]} was {rocks[i]}')
+
+# for loop approach 2
+for i, rock in enumerate(rocks):
+    print(f'the rock of the year {years[i]} was {rock}')
+
+# for loop approach 3
+for rock, year in zip(rocks, years):
+    print(f'the rock of the year {year} was {rock}')
+
 # Exercise 3 bonus:
 
+# create a new empty list
 
-###########################
-# session 3
-###########################
+empty_list = []
+
+# compute the number of characters of the strings 'marl', 'gneiss', 'limestone', 'eclogite'
+
+rocks = ['marl', 'gneiss', 'limestone', 'eclogite']
+
+# append the numbers to the empty list in the above given order
+
+for rock in rocks:
+    n_characters = len(rock)
+    empty_list.append(n_characters)
+
+# print the list
+
+print(empty_list)
+
+# compute the sum of the last three elements of the list
+
+sum_of_last_3 = sum(empty_list[-3:])
+
+# print the result as a string “the result is: XX” two times by using the .format() method and an f-string.
+
+print(f'the result is: {sum_of_last_3}')
+
 
 # Exercise 8
 
+# create two lists with the following content:
+rock_list = ['gneiss', 'marl', 'limestone']
+ucs = [150, 45, 90]
+
+# create a dictionary called “rock_dict” with the first list as keys and the 
+# second list as values
+
+rock_dict = dict(zip(rock_list, ucs))
+
+# add a new entry to the dictionary consisting of a new rock type and an 
+# according UCS value
+
+rock_dict['dolomite'] = 120
+
+# print the content of the whole dictionary to the console through formatted
+# strings saying “The XX has a UCS of YY MPa”. Use a for-loop for this
+
+for rock in rock_dict.keys():
+    print(f'The {rock} has a UCS of {rock_dict[rock]} MPa.')
+
+
 # Exercise 9
+
+# compute the mean value, the median, the variance and the standard deviation
+# for that list: 
+c = [1, 2, 3, 1, 3, 3, 2, 1, 4, 6, 4, 1]
+
+# print the results with values rounded to 2 digits
+
+# mean
+mean_value = sum(c) / len(c)
+print(f'mean value: {round(mean_value, 2)}')
+
+# median
+c = sorted(c)
+
+if len(c) % 2 == 0:  # in case of an even list
+    mid_upper = int(len(c) / 2)  # first we get the upper index
+    mid_lower = mid_upper - 1  # then we get the lower index
+    median = (c[mid_upper] + c[mid_lower]) / 2
+else:  # in case of an uneven list
+    mid = int(len(c) / 2)
+    median = c[mid]
+
+print(f'median value: {round(median, 2)}')
+
+# variance
+sum_list = []
+
+for x_i in c:
+    sum_list.append((x_i - mean_value)**2)
+
+sum_of_sum_list = sum(sum_list)
+
+variance = sum_of_sum_list / len(c)
+
+print(f'variance value: {round(variance, 2)}')
+
+# standard deviation
+standard_deviation = variance**0.5
+
+print(f'standard deviation: {round(standard_deviation, 2)}')
+
+
+
+
+
+###########################
+# session 3 on 17. September 2025
+###########################
+
+# 1. repetition
 
 ### functions
 
