@@ -255,6 +255,14 @@ print(7 <= 7)
 
 # match - cases are an alternative control structure that is more efficient 
 # when it comes to matching single strings
+
+weathering_grades = {1: 'fresh',
+                     2: 'slightly weathered',
+                     3: 'moderately weathered',
+                     4: 'highly weathered',
+                     5: 'extremely weathered',
+                     6: 'residual soil'}
+
 DRILLING_ID = 'D_06'
 
 match DRILLING_ID:
@@ -443,32 +451,168 @@ print(f'standard deviation: {round(standard_deviation, 2)}')
 
 
 
-
-
 ###########################
 # session 3 on 17. September 2025
 ###########################
 
-# 1. repetition
-
 ### functions
+
+# functions are created with the "def" keyword and have to have a name and a
+# "body" in brackets after the name
+
+def hello_world_function():  #  # basic printing function
+    print('Hello World!')
+
+
+# functions need to be executed like this to run
+hello_world_function()
+
+# defining the function
+def custom_addition(a, b, print_result = False):
+    '''This is a custom addition function that computes the result of a + b'''
+    result = a + b
+
+    if print_result is True:
+        print(f'the result of the addition is: {result}')
+    else:
+        pass
+    return result
+
+# using the function
+output = custom_addition(30, 20, print_result=True)
+
+print(output)
 
 # Exercise 10
 
+def custom_mean(numbers):
+    '''the custom mean function takes a list of numbers and computes the
+    average value'''
+    result = sum(numbers) / len(numbers)
+    print(f'mean value: {round(result, 2)}')
+    return result
 
-### coding style, Zen of Python
+
+def custom_median(numbers):
+    numbers = sorted(numbers)
+
+    if len(numbers) % 2 == 0:  # in case of an even list
+        mid_upper = int(len(numbers) / 2)  # first we get the upper index
+        mid_lower = mid_upper - 1  # then we get the lower index
+        median = (numbers[mid_upper] + numbers[mid_lower]) / 2
+    else:  # in case of an uneven list
+        mid = int(len(numbers) / 2)
+        median = numbers[mid]
+
+    print(f'median value: {round(median, 2)}')
+    return median
 
 
-###########################
-# session 4
-###########################
+def custom_variance(numbers, mean):
+    sum_list = []
+
+    for x_i in numbers:
+        sum_list.append((x_i - mean)**2)
+
+    sum_of_sum_list = sum(sum_list)
+
+    variance = sum_of_sum_list / len(numbers)
+
+    print(f'variance value: {round(variance, 2)}')
+    return variance
+
+
+def custom_std(var):
+    standard_deviation = var**0.5
+    print(f'standard deviation: {round(standard_deviation, 2)}')
+    return standard_deviation
+
+
+# compute the mean value, the median, the variance and the standard deviation
+# for that list:
+c = [1, 2, 3, 1, 3, 3, 2, 1, 4, 6, 4, 1]
+
+
+# mean
+mean_value = custom_mean(c)
+# median
+median_value = custom_median(c)
+# variance
+variance_value = custom_variance(c, mean_value)
+# standard deviation
+std = custom_std(variance_value)
 
 
 ### modules, code environments, module documentation
 
+# we us modules with using the "import" keyword and can also abreviate them in
+# the same row
+
+# modules should be imported ontop of a script
+import matplotlib.pyplot as plt
+import numpy as np  # numpy is short for "numerical python" and a math module
+import pandas as pd
+
+# numpy works based on arrays and is much faster than classical loops
+exemplary_array = np.array([[1, 2, 3, 4, 5],
+                            [1, 2, 3, 4, 5]])
+
+# the shape of the array can be queried and individual columns / rows accessed
+print(exemplary_array.shape)
+print(exemplary_array[:, 1])
+print(exemplary_array[1, :])
+
+# number generation
+print(np.arange(start=10, stop=30, step=4))
+print(np.linspace(start=2, stop=5, num=5))
 
 # exercsie 11
+numbers = [1, 2, 3, 1, 3, 3, 2, 1, 4, 6, 4, 1]
 
-# exercsie 12
+print(f'mean value: {round(np.mean(numbers), 2)}')
+print(f'median value: {round(np.median(numbers), 2)}')
+print(f'variance value: {round(np.var(numbers), 2)}')
+print(f'std value: {round(np.std(numbers), 2)}')
 
-# exercsie 13
+# matplotlib example
+
+# let's create some random numbers
+
+N_NUMBERS = 1000
+
+
+rng = np.random.default_rng()
+
+# exemplary variables of different statistical distributions
+x = rng.uniform(0, 5, N_NUMBERS)
+y = rng.exponential(2, N_NUMBERS)
+z = rng.normal(2.5, 1, N_NUMBERS)
+
+time = np.arange(0, N_NUMBERS)  # seconds
+
+# plotting
+fig, ax = plt.subplots(nrows=1, ncols=2, figsize=(10, 5))
+
+ax[0].hist(z, edgecolor='black', bins=60, density=True, zorder=30, alpha=.5,
+           label='normal', color='forestgreen')
+ax[0].hist(x, edgecolor='black', bins=60, density=True, zorder=30, alpha=.5,
+           label='uniform')
+
+ax[0].legend()
+ax[0].set_xlabel('random numbers')
+ax[0].set_ylabel('number of datapoints')
+ax[0].grid(alpha=0.5, zorder=10)
+
+ax[1].plot(time, z, label='normal', color='forestgreen', alpha=.5)
+ax[1].plot(time, x, label='uniform', alpha=.5)
+
+ax[1].legend()
+ax[1].set_xlabel('time')
+ax[1].set_ylabel('random numbers')
+ax[1].grid(alpha=0.5)
+
+plt.tight_layout()
+plt.savefig('test.jpg', dpi=220)
+
+# there are more complex alternatives to plot generation that allow to be more
+# creative. E.g.: gridspec
